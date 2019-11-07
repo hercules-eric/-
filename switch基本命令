@@ -1,0 +1,55 @@
+交换机配置命令；
+=-=基本状态：
+switch：ROM状态
+hostname> 用户模式
+hostname# 特权模式
+hostname(config)# 全局配置模式
+hostname(config-ip)# 接口状态
+
+=-=口令设置：
+switch>enable；进入特权模式
+switch#config terminal //进入全局配置模式
+switch（config）#hostname 主机名 //设置交换机主机名
+switch（config）#enable secret xxx //设置特权加密口令
+switch（config）#enable password xxa //设置特权非密口令
+switch（config）#line console 0 //进入控制台口
+switch（config-line）#line vty 04 //进入虚拟终端
+switch（config-line）#login //允许登录
+switch（config-line）#password xx //设置登录口令xx
+switch#exit //返回命令
+Switch(config-line)#no login //取消密码
+Switch(config-line)#privilege level 15
+Switch(config-line)#end
+
+=-=VLAN设置：
+switch#vlan database；进入vlan设置
+switch（vlan）#vlan 2；建立vlan2
+switch（vlan）#no vlan 2；删除vlan2
+switch（config）#int f0/1；进入端口1
+switch（config-if）#switchport access vlan 2；当前端口加入vlan2
+switch（config-if）#no shutdown //激活端口
+switch（config-if）#switchport mode trunk；设置为干线(即设置此端口为中继模式)
+switch（config-if）#switchport trunk allowed vlan 1,2；设置允许的vlan
+switch（config-if）#switchport trunk allowed vlan remove 1 //删除不想要的vlan
+switch（config-if）#switchport trunk encapsulation dot1q//设置vlan中继协议
+switch（config）#vtp domain test1 //配置vtp，管理域
+switch（config）#vtp password xxx //配置vtp密码
+switch（config）#interface fa0/1
+switch（config-if）#switchport mode trunk //设置接口模式为trunk（串口）
+switch（config）#vtp mode server //设置vtp服务器模式
+switch（config）#vtpmodeclient //设置vtp客户端模式
+
+=-=设置IP地址：
+switch（config）#interface vlan 1 //进入vlan1
+switch（config-if）#ip address xxx.xxx.xxx.xxx mask //设置IP地址
+switch（config）#ip default-gateway xxx.xxx.xxx.xxx //设置默认网关
+
+=-=显示命令：
+switch#write；保存配置信息
+switch#dir flash；查看闪存
+switch#show vtp；查看vtp配置信息
+switch#show run；查看当前配置信息
+switch#show vlan；查看vlan配置信息
+switch#show interface；查看端口信息
+switch#show int f0/0；查看指定端口信息
+
